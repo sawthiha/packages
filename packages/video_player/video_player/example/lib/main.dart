@@ -154,12 +154,12 @@ class _ButterFlyAssetVideoState extends State<_ButterFlyAssetVideo> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.asset('assets/Butterfly-209.mp4');
+    _controller = VideoPlayerController.asset('assets/forward.mp4');
 
     _controller.addListener(() {
       setState(() {});
     });
-    _controller.setLooping(true);
+    _controller.setLooping(false);
     _controller.initialize().then((_) => setState(() {}));
     _controller.play();
   }
@@ -280,6 +280,7 @@ class _ControlsOverlay extends StatelessWidget {
     Duration(seconds: 10),
   ];
   static const List<double> _examplePlaybackRates = <double>[
+    -1.0,
     0.25,
     0.5,
     1.0,

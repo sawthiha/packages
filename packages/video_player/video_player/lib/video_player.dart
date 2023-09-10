@@ -549,6 +549,9 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
     await _videoPlayerPlatform.setLooping(_textureId, value.isLooping);
   }
 
+  /// Postion Update Notification interval
+  Duration positionUpdateInterval = const Duration(milliseconds: 500);
+
   Future<void> _applyPlayPause() async {
     if (_isDisposedOrNotInitialized) {
       return;
@@ -559,7 +562,7 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
       // Cancel previous timer.
       _timer?.cancel();
       _timer = Timer.periodic(
-        const Duration(milliseconds: 500),
+        positionUpdateInterval,
         (Timer timer) async {
           if (_isDisposed) {
             return;
