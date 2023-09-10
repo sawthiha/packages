@@ -94,8 +94,6 @@ class AVFoundationVideoPlayer extends VideoPlayerPlatform {
 
   @override
   Future<void> setPlaybackSpeed(int textureId, double speed) {
-    assert(speed > 0);
-
     return _api.setPlaybackSpeed(PlaybackSpeedMessage(
       textureId: textureId,
       speed: speed,

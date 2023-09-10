@@ -657,10 +657,6 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
   ///   the plugin also reports errors.
   Future<void> setPlaybackSpeed(double speed) async {
     if (speed < 0) {
-      throw ArgumentError.value(
-        speed,
-        'Negative playback speeds are generally unsupported.',
-      );
     } else if (speed == 0) {
       throw ArgumentError.value(
         speed,

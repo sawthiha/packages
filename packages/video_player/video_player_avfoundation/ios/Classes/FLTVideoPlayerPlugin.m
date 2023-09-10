@@ -466,7 +466,35 @@ NS_INLINE UIViewController *rootViewController(void) {
     return;
   }
 
-  _player.rate = speed;
+  if(speed < 0.0 && !_player.currentItem.canPlayReverse)  {
+      if (_eventSink != nil) {
+        _eventSink([FlutterError errorWithCode:@"VideoError"
+                                        message:@"Video cannot be reversed"
+                                        details:nil]);
+      }
+      return;
+  }
+
+  if(speed < 0.0 && speed > -1.0 && !_player.currentItem.canPlaySlowReverse)  {
+      if (_eventSink != nil) {
+        _eventSink([FlutterError errorWithCode:@"VideoError"
+                                        message:@"Video cannot be slow-reversed"
+                                        details:nil]);
+      }
+      return;
+  }
+  
+  if(speed < 0.0 && speed < -2.0 && !_player.currentItem.canPlayFastReverse)  {
+      if (_eventSink != nil) {
+        _eventSink([FlutterError errorWithCode:@"VideoError"
+                                        message:@"Video cannot be fast-reversed"
+                                        details:nil]);
+      }
+      return;
+  }
+  
+  [_player setRate:speed];
+
 }
 
 - (CVPixelBufferRef)copyPixelBuffer {
