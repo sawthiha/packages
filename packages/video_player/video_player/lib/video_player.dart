@@ -452,7 +452,11 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
           // position=value.duration. Instead of setting the values directly,
           // we use pause() and seekTo() to ensure the platform stops playing
           // and seeks to the last frame of the video.
-          pause().then((void pauseResult) => seekTo(value.duration));
+          if(value.position == value.duration && value.playbackSpeed < 0.0)  {
+
+          } else  {
+            pause().then((void pauseResult) => value.playbackSpeed > 0.0 ? seekTo(value.duration): seekTo(Duration.zero));
+          }
           break;
         case VideoEventType.bufferingUpdate:
           value = value.copyWith(buffered: event.buffered);
@@ -518,7 +522,7 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
   /// has been sent to the platform, not when playback itself is totally
   /// finished.
   Future<void> play() async {
-    if (value.position == value.duration) {
+    if (value.position == value.duration && value.playbackSpeed > 0.0) {
       await seekTo(Duration.zero);
     }
     value = value.copyWith(isPlaying: true);
